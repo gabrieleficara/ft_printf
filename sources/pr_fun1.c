@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:01:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/17 18:06:12 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/18 14:24:44 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ int		pr_dec(va_list ap, t_flags flags)
 	else
 		i = va_arg(ap, int);
 	tmp = ft_itoa_base(i, 10, 0);
+	i = ft_strlen(tmp);
+	if (flags.pre > i)
+		tmp = ft_sfstrjoin((char *)ft_memset((void *)ft_strnew(flags.pre - i),
+					'0', flags.pre - i), tmp, 3);
 	if (i > 0)
 		if (flags.plu == 1 || flags.spa == 1)
 			tmp = ft_sfstrjoin(((flags.plu == 1) ? "+" : " "), tmp, 2);

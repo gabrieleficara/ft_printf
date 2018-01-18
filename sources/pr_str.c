@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 12:12:29 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/17 18:06:09 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/18 14:17:08 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int		widpre(t_flags *flags, char *pnt)
 		flags->wid = ft_atoi(pnt);
 	else if (flags->dot == 1)
 		flags->pre = ft_atoi(pnt);
-	while (pnt[i] >= 0 && pnt[i] <= 9)
+	while (pnt[i] >= '0' && pnt[i] <= '9')
 		i++;
 	return (i);
 }
@@ -71,7 +71,7 @@ int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
 			return (++i);
 		}
 		if (pnt[i] > '0' && pnt[i] <= '9')
-			i += widpre(&flags, pnt + i);
+			i += widpre(&flags, pnt + i) - 1;
 	}
 	return (0);
 }
@@ -99,27 +99,23 @@ int				putspecstr(char *tmp, t_flags flags)
 int				putspecint(char *tmp, t_flags flags)
 {
 	int		len;
-	int		lentot;
 	int		i;
 	int		j;
 
 	i = 0;
-	len = ft_strlen(tmp);
 	j = 0;
-	lentot = (flags.pre > len) ? flags.pre : len;
+	len = ft_strlen(tmp);
 	if (flags.min == 0)
-		while (flags.wid - lentot > j++)
+		while (flags.wid - len > j++)
 			ft_putchar(' ');
 	i += j;
-	while (flags.pre-- > len)
-		ft_putchar('0');
 	ft_putstr(tmp);
-	if (j == 0)
+	if (j == 0 && flags.min == 1)
 	{
-		while (flags.wid - lentot > j++ && flags.min == 1)
+		while (flags.wid - len > j++)
 			ft_putchar(' ');
 		i += j;
 	}
-	i += lentot;
+	i += len;
 	return (i - 1);
 }
