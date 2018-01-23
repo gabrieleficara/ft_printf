@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 19:59:25 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/18 13:46:03 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/20 15:02:30 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	char		digit(unsigned long int num, int base, int caps)
 {
-	int			mod;
+	int					mod;
 
 	if ((mod = num % base) < 10)
 		return (mod + 48);
@@ -24,7 +24,7 @@ static	char		digit(unsigned long int num, int base, int caps)
 
 static	int			ft_lenn(unsigned long int num, int base)
 {
-	int			i;
+	int					i;
 
 	i = 0;
 	while (num > 0)
@@ -37,8 +37,8 @@ static	int			ft_lenn(unsigned long int num, int base)
 
 char				*ft_itoa_base_u(unsigned long int n, int base, int caps)
 {
-	char		*str;
-	int			i;
+	char				*str;
+	int					i;
 	unsigned long int	num;
 
 	if (base > 16)

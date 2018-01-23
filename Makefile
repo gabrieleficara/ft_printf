@@ -6,7 +6,7 @@
 #    By: gficara <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/09 17:25:41 by gficara           #+#    #+#              #
-#    Updated: 2018/01/17 17:16:10 by gficara          ###   ########.fr        #
+#    Updated: 2018/01/23 15:09:57 by gficara          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,10 +93,14 @@ SRC = libft/ft_abs.c \
 		libft/get_next_line.c \
 		sources/ft_printf.c \
 		sources/pr_fun1.c \
+		sources/pr_fun2.c \
+		sources/pr_fun3.c \
+		sources/pr_fun4.c \
 		sources/pr_str.c \
 		sources/ft_itoa_base.c \
 		sources/ft_itoa_base_u.c \
-		sources/ft_abs_base.c
+		sources/ft_abs_base.c \
+		sources/putuspecstr.c
 
 OBJ = $(SRC:.c=.o)
 

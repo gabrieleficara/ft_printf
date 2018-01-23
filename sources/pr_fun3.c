@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pr_fun3.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/01/20 15:10:52 by gficara           #+#    #+#             */
+/*   Updated: 2018/01/22 12:23:18 by gficara          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+int		pr_bin(va_list ap, t_flags flags)
+{
+	char		*tmp;
+	int			ret;
+	intmax_t	i;
+
+	if (flags.l != 0)
+		i = (flags.l == 1) ? va_arg(ap, unsigned long) :
+			va_arg(ap, unsigned long long);
+	else if (flags.h != 0)
+		i = (flags.h == 1) ? (unsigned short)va_arg(ap, int) :
+			(unsigned char)va_arg(ap, int);
+	else if (flags.z == 1 || flags.j == 1)
+		i = (flags.z == 1) ? va_arg(ap, size_t) : va_arg(ap, uintmax_t);
+	else
+		i = va_arg(ap, unsigned int);
+	tmp = ft_itoa_base_u(i, 2, 0);
+	tmp = zero(tmp, flags, 1);
+	ret = putspecint(tmp, flags);
+	ft_strdel(&tmp);
+	return (ret);
+}
+
+int		pr_pnt(va_list ap, t_flags flags)
+{
+	flags.has = 1;
+	flags.l = 1;
+	return (pr_hex(ap, flags));
+}
+
+int		pr_mdec(va_list ap, t_flags flags)
+{
+	flags.l = 1;
+	return (pr_dec(ap, flags));
+}
+
+int		pr_mudec(va_list ap, t_flags flags)
+{
+	flags.l = 1;
+	return (pr_udec(ap, flags));
+}
+
+int		pr_moct(va_list ap, t_flags flags)
+{
+	flags.l = 1;
+	return (pr_oct(ap, flags));
+}

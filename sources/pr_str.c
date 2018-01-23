@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 12:12:29 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/18 14:17:08 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/22 11:52:53 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
 	{
 		if (ft_strchr("hljz#0-+. ", pnt[i]))
 			flags = defflg(flags, pnt[i]);
-		if (ft_strchr("sSpdDioOuUxXcC", pnt[i]))
+		if (ft_strchr("sSpdDioOuUxXcCb", pnt[i]))
 		{
-			while (pnt[i] != (g_print[++j]).spec && j < 4)
+			while (pnt[i] != (g_print[++j]).spec && i < 15)
 				;
 			if (pnt[i] == (g_print[j]).spec)
 				*count = *count + (g_print[j]).fun(ap, flags);
@@ -85,12 +85,15 @@ int				putspecstr(char *tmp, t_flags flags)
 	i = 0;
 	len = ft_strlen(tmp);
 	len = (flags.pre != 0 && flags.pre < len) ? flags.pre : len;
-	empty = ((flags.zer == 1) ? '0' : ' ');
+	empty = (flags.zer == 1) ? '0' : ' ';
 	if (flags.min != 0)
 		ft_putnstr(tmp, len);
 	if (flags.wid != 0 && flags.wid > len)
+	{
 		while (i++ < flags.wid - len)
 			ft_putchar(empty);
+		i--;
+	}
 	if (flags.min == 0)
 		ft_putnstr(tmp, len);
 	return (i + len);
@@ -101,10 +104,12 @@ int				putspecint(char *tmp, t_flags flags)
 	int		len;
 	int		i;
 	int		j;
+	char	empty;
 
 	i = 0;
 	j = 0;
 	len = ft_strlen(tmp);
+	empty = ((flags.zer == 1 && flags.plu == 0 && flags.spa == 0) ? '0' : ' ');
 	if (flags.min == 0)
 		while (flags.wid - len > j++)
 			ft_putchar(' ');
