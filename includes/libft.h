@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 15:18:27 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/10 14:50:41 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/27 18:31:10 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,6 @@ char				*ft_sfstrjoin(char const *s1, char const *s2, int c);
 int					ft_sqrt(int nb);
 int					ft_lstcnt(t_list *head);
 t_list				*ft_lstiso(t_list *ptr, t_list *nxt, t_list **head);
+void				ft_swap(int *a, int *b);
+
 #endif

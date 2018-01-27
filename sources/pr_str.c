@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 12:12:29 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/22 11:52:53 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/26 17:50:32 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,31 @@ static t_flags	defflg(t_flags flags, char c)
 		flags.j++;
 	else if (c == '.' && flags.dot == 0)
 		flags.dot++;
+	else if (c == '%' && flags.per == 0)
+		flags.per++;
 	return (flags);
 }
 
-static int		widpre(t_flags *flags, char *pnt)
+static int		widpre(t_flags *flags, char *pnt, char d, va_list ap)
 {
 	int		i;
 
-	i = 0;
+	if (d != '*')
+	{
+		i = 0;
+		if (flags->dot == 0)
+			flags->wid = ft_atoi(pnt);
+		else if (flags->dot == 1)
+			flags->pre = ft_atoi(pnt);
+		while (pnt[i] >= '0' && pnt[i] <= '9')
+			i++;
+		return (i);
+	}
 	if (flags->dot == 0)
-		flags->wid = ft_atoi(pnt);
+		flags->wid = va_arg(ap, int);
 	else if (flags->dot == 1)
-		flags->pre = ft_atoi(pnt);
-	while (pnt[i] >= '0' && pnt[i] <= '9')
-		i++;
-	return (i);
+		flags->pre = va_arg(ap, int);
+	return (0);
 }
 
 int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
@@ -60,9 +70,9 @@ int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
 	j = -1;
 	while (pnt[++i])
 	{
-		if (ft_strchr("hljz#0-+. ", pnt[i]))
+		if (ft_strchr("hljz#0-+. %", pnt[i]))
 			flags = defflg(flags, pnt[i]);
-		if (ft_strchr("sSpdDioOuUxXcCb", pnt[i]))
+		if (ft_strchr("sSpdDioOuUxXcCb%", pnt[i]))
 		{
 			while (pnt[i] != (g_print[++j]).spec && i < 15)
 				;
@@ -71,7 +81,9 @@ int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
 			return (++i);
 		}
 		if (pnt[i] > '0' && pnt[i] <= '9')
-			i += widpre(&flags, pnt + i) - 1;
+			i += widpre(&flags, pnt + i, 'h', ap) - 1;
+		if (pnt[i] == '*')
+			widpre(&flags, pnt + i, '*', ap);
 	}
 	return (0);
 }

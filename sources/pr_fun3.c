@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 15:10:52 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/22 12:23:18 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/26 18:02:18 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		pr_bin(va_list ap, t_flags flags)
 	int			ret;
 	intmax_t	i;
 
+	if (flags.dot == 1 && flags.pre == 0)
+		return (putspecint("", flags));
 	if (flags.l != 0)
 		i = (flags.l == 1) ? va_arg(ap, unsigned long) :
 			va_arg(ap, unsigned long long);

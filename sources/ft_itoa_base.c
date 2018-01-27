@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 19:59:25 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/18 13:46:20 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/27 19:17:24 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ static	int			ft_lenn(intmax_t num, int base)
 	return (i);
 }
 
+static char			*shame(void)
+{
+	char	*new;
+
+	new = ft_strdup("-9223372036854775808");
+	return (new);
+}
+
 char				*ft_itoa_base(intmax_t n, int base, int caps)
 {
 	char		*str;
@@ -48,6 +56,8 @@ char				*ft_itoa_base(intmax_t n, int base, int caps)
 
 	if (base > 16)
 		return (NULL);
+	if (n < (intmax_t)-9223372036854775807)
+		return (shame());
 	i = ft_lenn(n, base);
 	str = (char*)malloc((i + 1) * sizeof(char));
 	if (!str)

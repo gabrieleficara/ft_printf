@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:41:22 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/23 15:04:05 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/27 19:28:03 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct			s_flags
 	int					wid;
 	int					pre;
 	int					dot;
+	int					per;
 }						t_flags;
 
 int						ft_printf(const char *restrict format, ...);
@@ -44,6 +45,8 @@ int						putspecint(char *tmp, t_flags flags);
 long long				ft_abs_base(long long n);
 char					*zero(char *tmp, t_flags flags, int u);
 void					uniwrite(int let, int len);
+int						hashdown(t_flags flags, int c);
+char					*mincor(char *tmp, t_flags flags);
 
 int						pr_str(va_list ap, t_flags flags);
 int						pr_char(va_list ap, t_flags flags);
@@ -70,6 +73,6 @@ static t_print			g_print[] = {{'s', &pr_str}, {'c', &pr_char},
 	{'i', &pr_dec}, {'d', &pr_dec}, {'u', &pr_udec}, {'o', &pr_oct},
 	{'x', &pr_hex}, {'X', &pr_mhex}, {'b', &pr_bin}, {'p', &pr_pnt},
 	{'D', &pr_mdec}, {'U', &pr_mudec}, {'O', &pr_moct}, {'S', &pr_ustr},
-	{'C', &pr_uchar}};
+	{'C', &pr_uchar}, {'%', &pr_char}};
 
 #endif

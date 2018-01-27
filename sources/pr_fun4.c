@@ -6,13 +6,13 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 15:32:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/23 15:07:50 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/27 19:38:02 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	putuchar(unsigned int str)
+static void	putuchar(int str)
 {
 	int		j;
 
@@ -23,7 +23,7 @@ static void	putuchar(unsigned int str)
 	uniwrite(str, j);
 }
 
-static int	putnustr(unsigned int *str, int unsigned len, int usage)
+static int	putnustr(int *str, int usage)
 {
 	int		i;
 	int		j;
@@ -31,7 +31,7 @@ static int	putnustr(unsigned int *str, int unsigned len, int usage)
 	if (usage == 1)
 	{
 		i = 0;
-		while(str[i] < len)
+		while (str[i] != '\0')
 			putuchar(str[i++]);
 		return (0);
 	}
@@ -47,21 +47,21 @@ static int	putnustr(unsigned int *str, int unsigned len, int usage)
 				j += (str[i] < 65536) ? 3 : 4;
 			i++;
 		}
-		return (i);
+		return (j);
 	}
 }
 
-static int	putuspecstr(unsigned int *tmp, t_flags flags)
+static int	putuspecstr(int *tmp, t_flags flags)
 {
 	int		i;
 	int		len;
 	char	empty;
 
 	i = 0;
-	len = putnustr(tmp, 0, 0);
+	len = putnustr(tmp, 0);
 	empty = (flags.zer == 1) ? '0' : ' ';
 	if (flags.min != 0)
-		putnustr(tmp, len, 1);
+		putnustr(tmp, 1);
 	if (flags.wid != 0 && flags.wid > len)
 	{
 		while (i++ < flags.wid - len)
@@ -69,23 +69,33 @@ static int	putuspecstr(unsigned int *tmp, t_flags flags)
 		i--;
 	}
 	if (flags.min == 0)
-		putnustr(tmp, len, 1);
+		putnustr(tmp, 1);
 	return (i + len);
 }
 
-int		pr_ustr(va_list ap, t_flags flags)
+int			pr_ustr(va_list ap, t_flags flags)
 {
-	unsigned int		*tmp;
+	int		*tmp;
 
-	tmp = va_arg(ap, unsigned int *);
+	if (!(tmp = va_arg(ap, int *)))
+			return (putspecstr("(null)", flags));
 	return (putuspecstr(tmp, flags));
 }
 
-int		pr_uchar(va_list ap, t_flags flags)
+int			pr_uchar(va_list ap, t_flags flags)
 {
-	unsigned int		tmp[2];
+	int		tmp[2];
+	int		i;
 
-	tmp[0] = va_arg(ap, unsigned int);
+	tmp[0] = va_arg(ap, int);
 	tmp[1] = '\0';
+	if (!tmp[0])
+	{
+		i = 1;
+		while (i++ < flags.wid)
+			ft_putchar((flags.zer == 0) ? ' ' : '0');
+		ft_putchar(0);
+		return ((flags.wid == 0) ? 1 : flags.wid);
+	}
 	return (putuspecstr(tmp, flags));
 }

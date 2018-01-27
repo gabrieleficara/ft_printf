@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/15 16:16:10 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/17 18:06:07 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/26 11:54:49 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static t_flags	initflags(void)
 	new.wid = 0;
 	new.pre = 0;
 	new.dot = 0;
+	new.per = 0;
 	return (new);
 }
 
@@ -36,12 +37,6 @@ int				flagcheck(char *pnt, int *count, va_list ap)
 	t_flags	flags;
 	size_t	i;
 
-	if (*pnt == '%')
-	{
-		(*count)++;
-		ft_putchar('%');
-		return (1);
-	}
 	flags = initflags();
 	i = 0;
 	i += findspec(pnt, ap, flags, count);
