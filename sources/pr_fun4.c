@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 15:32:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 16:00:28 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 16:09:57 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int			pr_uchar(va_list ap, t_flags flags)
 	int		i;
 
 	tmp[0] = va_arg(ap, int);
-	if (tmp[0] == 0)
-		return (putspecstr("", flags));
 	tmp[1] = '\0';
 	if (!tmp[0])
 	{
