@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:13:26 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 17:42:36 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 17:52:59 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	uniwrite(int let, int len)
 {
 	if (len == 1)
-		return (ft_putchar(let));
+		return (ft_putchar((char)let));
 	else
 	{
 		if (len > 2)
