@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:01:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 13:35:42 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 15:38:45 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int		pr_char(va_list ap, t_flags flags)
 	if (flags.per == 1)
 		return (putspecstr("%", flags));
 	tmp[0] = va_arg(ap, int);
+	if (tmp[0] > 225)
+		tmp[0] = 255;
 	tmp[1] = '\0';
 	if (!tmp[0])
 	{
