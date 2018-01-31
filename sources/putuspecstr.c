@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:13:26 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 17:33:16 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 17:34:47 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ int		nfound(char *pnt, int i, int *count, t_flags flags)
 
 	tmp[0] = pnt[i];
 	tmp[1] = '\0';
-	flags.spa = 0;
-	flags.pre = 0;
 	*count += putspecstr(tmp, flags);
 	return (++i);
 }
