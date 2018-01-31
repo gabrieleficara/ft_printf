@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:13:26 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/27 19:12:52 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 13:26:10 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ int		hashdown(t_flags flags, int c)
 char	*mincor(char *tmp, t_flags flags)
 {
 	int		i;
+	int		len;
 
+	len = ft_strlen(tmp);
 	i = 0;
 	while (tmp[i] && tmp[i] != '-')
 		i++;
@@ -51,10 +53,31 @@ char	*mincor(char *tmp, t_flags flags)
 		tmp[i] = '0';
 		tmp[0] = '-';
 	}
-	else
+	else if (flags.pre >= len && flags.dot == 1)
 	{
 		tmp[i] = '0';
 		tmp = ft_sfstrjoin("-", tmp, 2);
 	}
 	return (tmp);
+}
+
+void	letfound(char *pnt, va_list ap, t_flags flags, int *count)
+{
+	int		j;
+
+	j = -1;
+	while (*pnt != (g_print[++j]).spec && j < 15)
+		;
+	if (*pnt == (g_print[j]).spec)
+		*count = *count + (g_print[j]).fun(ap, flags);
+}
+
+int		nfound(char *pnt, int i, int *count, t_flags flags)
+{
+	char	tmp[2];
+
+	tmp[0] = pnt[i];
+	tmp[1] = '\0';
+	*count += putspecstr(tmp, flags);
+	return (++i);
 }

@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:01:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/27 19:12:44 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 13:35:42 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int		pr_str(va_list ap, t_flags flags)
 	if (flags.l == 1)
 		return (pr_ustr(ap, flags));
 	tmp = va_arg(ap, char *);
+	if (flags.dot == 1 && flags.pre == 0)
+		return (putspecstr("", flags));
 	if (!tmp)
 		return (putspecstr("(null)", flags));
 	return (putspecstr(tmp, flags));
@@ -51,11 +53,11 @@ char	*zero(char *tmp, t_flags flags, int u)
 	int		i;
 
 	i = ft_strlen(tmp);
-	if (flags.pre > i)
+	if (flags.pre > i && flags.dot == 1)
 		tmp = ft_sfstrjoin((char *)ft_memset((void *)ft_strnew(flags.pre - i),
 					'0', flags.pre - i), tmp, 3);
-	else if (flags.wid > i && flags.pre == 0 && flags.min == 0
-			&& flags.zer == 1)
+	else if (flags.min == 0 && (flags.wid > i && flags.pre == 0
+				&& flags.zer == 1))
 		tmp = ft_sfstrjoin((char *)ft_memset((void *)ft_strnew(flags.wid - i),
 					'0', flags.wid - i), tmp, 3);
 	if (ft_strchr(tmp, '-'))
@@ -77,12 +79,12 @@ int		pr_dec(va_list ap, t_flags flags)
 	int			ret;
 	intmax_t	i;
 
-	if (flags.l != 0)
+	if (flags.z == 1 || flags.j == 1)
+		i = (flags.z == 1) ? va_arg(ap, size_t) : va_arg(ap, intmax_t);
+	else if (flags.l != 0)
 		i = (flags.l == 1) ? va_arg(ap, long) : va_arg(ap, long long);
 	else if (flags.h != 0)
 		i = (flags.h == 1) ? (short)va_arg(ap, int) : (char)va_arg(ap, int);
-	else if (flags.z == 1 || flags.j == 1)
-		i = (flags.z == 1) ? va_arg(ap, size_t) : va_arg(ap, intmax_t);
 	else
 		i = va_arg(ap, int);
 	if (flags.dot == 1 && flags.pre == 0 && i == 0)

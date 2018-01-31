@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 15:10:52 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/26 18:02:18 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/29 18:48:19 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,23 @@ int		pr_bin(va_list ap, t_flags flags)
 
 int		pr_pnt(va_list ap, t_flags flags)
 {
+	char		*tmp;
+	int			ret;
+	intmax_t	i;
+
 	flags.has = 1;
-	flags.l = 1;
-	return (pr_hex(ap, flags));
+	i = va_arg(ap, unsigned long);
+	tmp = ft_itoa_base_u(i, 16, 0);
+	if (i == 0 && flags.pre == 0)
+	{
+		ft_strdel(&tmp);
+		flags.min = (flags.zer == 1) ? 1 : flags.min;
+		return (putspecstr((flags.dot && !flags.pre) ? "0x" : "0x0", flags));
+	}
+	tmp = zerobase(tmp, flags, 1);
+	ret = putspecint(tmp, flags);
+	ft_strdel(&tmp);
+	return (ret);
 }
 
 int		pr_mdec(va_list ap, t_flags flags)

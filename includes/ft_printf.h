@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 15:41:22 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/27 19:28:03 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/30 14:55:29 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ char					*zero(char *tmp, t_flags flags, int u);
 void					uniwrite(int let, int len);
 int						hashdown(t_flags flags, int c);
 char					*mincor(char *tmp, t_flags flags);
+char					*zerobase(char *tmp, t_flags flags, int u);
+void					letfound(char *pnt, va_list ap, t_flags flags,
+		int *count);
+int						nfound(char *pnt, int i, int *count, t_flags flags);
 
 int						pr_str(va_list ap, t_flags flags);
 int						pr_char(va_list ap, t_flags flags);

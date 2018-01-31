@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/13 12:12:29 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/26 17:50:32 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 13:53:50 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 static t_flags	defflg(t_flags flags, char c)
 {
-	if (c == '-' && flags.min == 0)
-		flags.min++;
-	else if (c == '+' && flags.plu == 0)
-		flags.plu++;
-	else if (c == ' ' && flags.spa == 0)
-		flags.spa++;
-	else if (c == '0' && flags.zer == 0)
+	if (c == '-')
+		flags.min = 1;
+	else if (c == '.')
+		flags.dot++;
+	else if (c == '0')
 		flags.zer++;
-	else if (c == '#' && flags.plu == 0)
-		flags.has++;
+	else if (c == '+')
+		flags.plu = 1;
+	else if (c == ' ')
+		flags.spa = 1;
+	else if (c == '#')
+		flags.has = 1;
 	else if (c == 'h' && flags.plu < 2)
 		flags.h++;
 	else if (c == 'l' && flags.plu < 2)
 		flags.l++;
-	else if (c == 'z' && flags.plu == 0)
-		flags.z++;
-	else if (c == 'j' && flags.plu == 0)
-		flags.j++;
-	else if (c == '.' && flags.dot == 0)
-		flags.dot++;
-	else if (c == '%' && flags.per == 0)
-		flags.per++;
+	else if (c == 'z')
+		flags.z = 1;
+	else if (c == 'j')
+		flags.j = 1;
+	else if (c == '%')
+		flags.per = 1;
 	return (flags);
 }
 
@@ -55,37 +55,44 @@ static int		widpre(t_flags *flags, char *pnt, char d, va_list ap)
 		return (i);
 	}
 	if (flags->dot == 0)
-		flags->wid = va_arg(ap, int);
-	else if (flags->dot == 1)
-		flags->pre = va_arg(ap, int);
+		if ((flags->wid = va_arg(ap, int)) < 0)
+		{
+			flags->wid = -flags->wid;
+			flags->min = 1;
+		}
+	if (flags->dot == 1)
+		if ((flags->pre = va_arg(ap, int)) < 0)
+			flags->pre = (flags->zer == 1) ? 0 : -flags->pre;
 	return (0);
 }
 
 int				findspec(char *pnt, va_list ap, t_flags flags, int *count)
 {
 	int		i;
-	int		j;
 
 	i = -1;
-	j = -1;
 	while (pnt[++i])
 	{
-		if (ft_strchr("hljz#0-+. %", pnt[i]))
-			flags = defflg(flags, pnt[i]);
-		if (ft_strchr("sSpdDioOuUxXcCb%", pnt[i]))
+		if (ft_strchr("hljz#0-+. %sSpdDioOuUxXcCb%*", pnt[i]))
 		{
-			while (pnt[i] != (g_print[++j]).spec && i < 15)
-				;
-			if (pnt[i] == (g_print[j]).spec)
-				*count = *count + (g_print[j]).fun(ap, flags);
-			return (++i);
+			if (ft_strchr("hljz#0-+. %*", pnt[i]))
+				flags = defflg(flags, pnt[i]);
+			if (ft_strchr("sSpdDioOuUxXcCb%", pnt[i]))
+			{
+				flags.zer = (flags.min == 1) ? 0 : flags.zer;
+				flags.pre = (flags.dot != 1) ? 0 : flags.pre;
+				letfound(pnt + i, ap, flags, count);
+				return (++i);
+			}
+			if (pnt[i] == '*')
+				widpre(&flags, pnt + i, '*', ap);
 		}
-		if (pnt[i] > '0' && pnt[i] <= '9')
+		else if (pnt[i] > '0' && pnt[i] <= '9')
 			i += widpre(&flags, pnt + i, 'h', ap) - 1;
-		if (pnt[i] == '*')
-			widpre(&flags, pnt + i, '*', ap);
+		else
+			return (nfound(pnt, i, count, flags));
 	}
-	return (0);
+	return (i);
 }
 
 int				putspecstr(char *tmp, t_flags flags)
