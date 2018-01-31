@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/12 12:01:13 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 17:03:19 by gficara          ###   ########.fr       */
+/*   Updated: 2018/01/31 17:14:10 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int		pr_str(va_list ap, t_flags flags)
 
 int		pr_char(va_list ap, t_flags flags)
 {
-	unsigned int	tmp[2];
-	int				i;
+	char	tmp[2];
+	int		i;
 
 	if (flags.l == 1)
 		return (pr_uchar(ap, flags));
 	if (flags.per == 1)
 		return (putspecstr("%", flags));
-	tmp[0] = (char)va_arg(ap, unsigned int);
+	tmp[0] = va_arg(ap, unsigned int);
 	tmp[1] = '\0';
 	if (!tmp[0])
 	{
