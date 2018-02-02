@@ -6,7 +6,7 @@
 /*   By: gficara <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/25 17:13:26 by gficara           #+#    #+#             */
-/*   Updated: 2018/01/31 17:52:59 by gficara          ###   ########.fr       */
+/*   Updated: 2018/02/02 11:57:18 by gficara          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 void	uniwrite(int let, int len)
 {
 	if (len == 1)
-		return (ft_putchar((char)let));
+		return (ft_putchar((unsigned int)let));
 	else
 	{
 		if (len > 2)
-			ft_putchar((len != 4) ? 224 | (15 & (let >> 12)) :
+			ft_putchar((unsigned int)(len != 4) ? 224 | (15 & (let >> 12)) :
 				240 | (let >> 18));
 		else
-			ft_putchar(192 | (31 & (let >> 6)));
+			ft_putchar((unsigned int)192 | (31 & (let >> 6)));
 		if (len > 3)
-			ft_putchar(128 | (63 & (let >> 12)));
+			ft_putchar((unsigned int)128 | (63 & (let >> 12)));
 		if (len > 2)
-			ft_putchar(128 | (63 & (let >> 6)));
+			ft_putchar((unsigned int)128 | (63 & (let >> 6)));
 		if (len > 1)
-			ft_putchar(128 | (63 & let));
+			ft_putchar((unsigned int)128 | (63 & let));
 	}
 }
 
